@@ -42,23 +42,30 @@ app.post("/api/v1/signup", async (req, res) => {
     res.status(411).json({ message: "username already exists" });
   }
 });
-app.post("/api/v1/content",userMiddleware, (req, res) => {
-    const link = req.body.link;
-    const type = req.body.type;
+app.post("/api/v1/content", userMiddleware, (req, res) => {
+  const link = req.body.link;
+  const type = req.body.type;
 
-    ContentModel.create({
-        link,
-        type,
-        // @ts-ignore
-        userId: req.userId,
-        tags:[],
-    })
+  ContentModel.create({
+    link,
+    type,
+    // @ts-ignore
+    userId: req.userId,
+    tags: [],
+  });
 
-     res.json({message: "content created"})
+  res.json({ message: "content created" });
 });
-app.get("/api/v1/content",userMiddleware, (req, res) => {});
-app.delete("/api/v1/content",userMiddleware, (req, res) => {});
-app.post("/api/v1/brain/share",userMiddleware, (req, res) => {});
+app.get("/api/v1/content", userMiddleware, async (req, res) => {
+  // @ts-ignore
+  const userId = req.userId;
+  const content = await ContentModel.find({
+    userId: userId,
+  });
+  res.json({ content });
+});
+app.delete("/api/v1/content", userMiddleware, (req, res) => {});
+app.post("/api/v1/brain/share", userMiddleware, (req, res) => {});
 app.get("/api/v1/brain/:shareLink", (req, res) => {});
 
 app.listen(8000, () => {
