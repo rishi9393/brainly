@@ -1,4 +1,14 @@
-export function PlusIcon() {
+interface PlusIconProps {
+  size?: "md" | "sm" | "lg";
+}
+
+const sizeVariants = {
+  sm: "size-2",
+  md: "size-4",
+  lg: "size-6",
+};
+
+export function PlusIcon(props: PlusIconProps) {
   return (
     <>
       <svg
@@ -7,7 +17,7 @@ export function PlusIcon() {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className="size-6"
+        className={sizeVariants[props.size || "md"]}
       >
         <path
           stroke-linecap="round"

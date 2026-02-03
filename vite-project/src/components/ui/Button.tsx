@@ -26,11 +26,13 @@ const sizeStyle = {
 export const Button = (props: ButtonProps) => {
   return (
     <button
-      className={`${defaultStyles} ${variantStyles[props.variant]} ${sizeStyle[props.size]}`}
+      className={`${defaultStyles} ${variantStyles[props.variant]} ${sizeStyle[props.size]} pl-2 pr-2 ē`}
     >
-      {props.startIcon}
-      {props.text}
-      {props.endIcon}
+      <div className="flex ">
+        {props.startIcon}
+        <div className="pl-2 pr-2">{props.text}</div>
+        {props.endIcon}
+      </div>
     </button>
   );
 };
