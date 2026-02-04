@@ -3,6 +3,7 @@ import { ContentModel, UserModel } from "./db.js";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middlewares.js";
+import ts from "typescript";
 
 const app = express();
 
@@ -69,8 +70,10 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
   // @ts-ignore
   const userId = req.userId;
 
-  await ContentModel.deleteOne({
-    userId,
+  await ContentModel.deleteMany({
+    contentId,
+  // @ts-ignore
+    userId: userId,
   });
   res.json({ message: "content deleted" });
 });
