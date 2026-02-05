@@ -1,9 +1,10 @@
 import express from "express";
-import { ContentModel, UserModel } from "./db.js";
+import { ContentModel, LinkModel, UserModel } from "./db.js";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middlewares.js";
 import ts from "typescript";
+import { random } from "./utils.js";
 
 const app = express();
 
@@ -72,12 +73,29 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
 
   await ContentModel.deleteMany({
     contentId,
-  // @ts-ignore
+    // @ts-ignore
     userId: userId,
   });
   res.json({ message: "content deleted" });
 });
-app.post("/api/v1/brain/share", userMiddleware, (req, res) => {});
+app.post("/api/v1/brain/share", userMiddleware, async(req, res) => {
+  const { share } = req.body;
+  if (share) {
+    await LinkModel.create({
+      // @ts-ignore
+      userId: req.userId,
+      hash: random(10),
+    });
+    res.json({ message: "Link created" });
+  } else {
+    // @ts-ignore
+    await LinkModel.deleteOne({
+    // @ts-ignore
+      userId: req.userId, 
+      });
+    res.json({ message: "Link removed" });
+  }
+});
 app.get("/api/v1/brain/:shareLink", (req, res) => {});
 
 app.listen(8000, () => {
