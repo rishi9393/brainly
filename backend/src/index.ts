@@ -78,7 +78,7 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
   });
   res.json({ message: "content deleted" });
 });
-app.post("/api/v1/brain/share", userMiddleware, async(req, res) => {
+app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
   const { share } = req.body;
   if (share) {
     await LinkModel.create({
@@ -90,13 +90,38 @@ app.post("/api/v1/brain/share", userMiddleware, async(req, res) => {
   } else {
     // @ts-ignore
     await LinkModel.deleteOne({
-    // @ts-ignore
-      userId: req.userId, 
-      });
+      // @ts-ignore
+      userId: req.userId,
+    });
     res.json({ message: "Link removed" });
   }
 });
-app.get("/api/v1/brain/:shareLink", (req, res) => {});
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
+  const hash = req.params.shareLink;
+
+  const link = await LinkModel.findOne({
+    hash,
+  });
+
+  if (!link) {
+    res.status(411).json({
+      message: "The link is not shared",
+    });
+  } else {
+    const content = await ContentModel.find({
+      userId: link.userId,
+    });
+
+    const user = await UserModel.findOne({
+      userId: link.userId,
+    });
+
+    res.json({
+      username: user?.username,
+      constent: content,
+    });
+  }
+});
 
 app.listen(8000, () => {
   console.log("Server is running on port 8000");
