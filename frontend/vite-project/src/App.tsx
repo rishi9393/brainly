@@ -8,7 +8,11 @@ function App() {
     <div>
       <Button variant="primary" text="Add Content" startIcon={<PlusIcon />} />
       <Button variant="secondary" text="Share" startIcon={<ShareIcon />} />
-      <Card/>
+      <Card
+        title="Sample YouTube Video"
+        link="https://www.youtube.com/watch?v=JUeIGphgmcU"
+        type="youtube"
+      />
     </div>
   );
 }
