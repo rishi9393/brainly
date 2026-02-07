@@ -1,5 +1,4 @@
 import { ShareIcon } from "../icons/ShareIcon";
-import { Ignore } from './../../node_modules/ignore/index.d';
 
 interface CardProps {
   title: string;
@@ -10,7 +9,7 @@ interface CardProps {
 export function Card({ title, link, type }: CardProps) {
   return (
     <div>
-      <div className="bg-white rounded-md shadow-md border-gray-200 p-4 max-w-96 border max-w-72 text-md">
+      <div className=" min-h-48 min-w-72 bg-white rounded-md shadow-md border-gray-200 p-4 max-w-96 border max-w-72 text-md">
         <div className="flex justify-between">
           <div className="flex items-center">
             <div className="pr-2 text-gray-500">
@@ -29,21 +28,22 @@ export function Card({ title, link, type }: CardProps) {
             </div>
           </div>
         </div>
-        <div className="pt-4">
+        <div className="pt-4 ">
           {type === "youtube" && (
             <iframe
               className="w-full"
-              src={link.replace("watch","embeded")}
+              src={link.replace("watch?v=", "embed/")}
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             ></iframe>
           )}
+
           {type === "twitter" && (
             <blockquote className="twitter-tweet">
-              <a href={link}></a>
+              <a href={link.replace("x.com", "twitter.com")}></a>
             </blockquote>
           )}
         </div>
