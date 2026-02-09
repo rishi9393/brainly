@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 
 function App() {
-  const [modelOpen, setModelOpen] = useState(true);
+  const [modelOpen, setModelOpen] = useState(false);
   return (
     <div className="border-gray-200">
       <div className="">
