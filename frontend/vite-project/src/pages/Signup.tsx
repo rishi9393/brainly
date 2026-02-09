@@ -1,0 +1,18 @@
+import Button from "../components/Button";
+import { Input } from "../components/Input";
+
+export function Sigup() {
+  return (
+    <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
+      <div className="bg-white rounded-lg shadow-md min-w-48 flex flex-col p-6">
+        <Input placeholder="Username" onChange={() => {}} />
+        <Input placeholder="Password" onChange={() => {}} />
+        <div className="justify-center flex">
+          <Button variant="primary" text="Sign Up">
+            Sign Up
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}

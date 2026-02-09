@@ -28,7 +28,7 @@ export function CreateContentModel({ open, onClose }) {
   );
 }
 
-function Input({ onChange, placeholder }: { onChange: () => void }) {
+function Input({ onChange, placeholder }: {onChange: () => void, placeholder: string }) {
   return (
     <input
       placeholder={placeholder}
