@@ -4,11 +4,17 @@ import { Input } from "../components/Input";
 export function Sigup() {
   return (
     <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
-      <div className="bg-white rounded-lg shadow-md min-w-48 flex flex-col p-6">
+      <div className="bg-white rounded-lg shadow-md min-w-48 flex flex-col p-8">
         <Input placeholder="Username" onChange={() => {}} />
         <Input placeholder="Password" onChange={() => {}} />
-        <div className="justify-center flex">
-          <Button variant="primary" text="Sign Up">
+        <div className="justify-center flex mt-4">
+          <Button
+            variant="primary"
+            text="Sign Up"
+            fullWidth
+            onClick={() => {}}
+            loading={true}
+          >
             Sign Up
           </Button>
         </div>

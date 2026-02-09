@@ -1,12 +1,17 @@
 import Dashboard from "./pages/dashboard";
-import { Sigup } from "./pages/Signup";
+import { Sigin } from "./pages/Sigin";
+import { Sigup } from "./pages/Signup";  
+import {Route,BrowserRouter,Routes} from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <Sigup />
-      <Dashboard />
-    </>
+   <BrowserRouter>
+    <Routes>
+      <Route path="/sigin" element={<Sigin />} />
+      <Route path="/signup" element={<Sigup />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes> 
+   </BrowserRouter>
   );
 }
 
