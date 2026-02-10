@@ -4,7 +4,7 @@ interface ButtonProps {
   variant: "primary" | "secondary";
   text: string;
   startIcon?: ReactElement;
-  onclick?: () => void;
+  onClick?: () => void;
   fullWidth?: boolean;
   loading?: boolean;
 }
@@ -23,13 +23,13 @@ const Button = ({
   startIcon,
   fullWidth,
   loading,
-  onclick,
+  onClick,
 }: ButtonProps) => {
   return (
     <button
       className={`${defaultStyles} ${variantClasses[variant]}${fullWidth ? " w-full flex justify-center items-center" : ""}`}
       disabled={loading}
-      onClick={onclick}
+      onClick={onClick}
     >
       {startIcon}
       {text}

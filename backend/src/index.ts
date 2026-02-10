@@ -5,10 +5,12 @@ import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middlewares.js";
 import ts from "typescript";
 import { random } from "./utils.js";
+import cors from "cors";  
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post("/api/v1/signin", async (req, res) => {
   const { username, password } = req.body;

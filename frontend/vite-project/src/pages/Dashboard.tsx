@@ -25,7 +25,7 @@ function Dashboard() {
             variant="primary"
             text="Add Content"
             startIcon={<PlusIcon />}
-            onclick={() => {
+            onClick={() => {
               setModelOpen(true);
             }}
           />
