@@ -55,6 +55,7 @@ app.post("/api/v1/content", userMiddleware, (req, res) => {
     type,
     // @ts-ignore
     userId: req.userId,
+    title: req.body.title,
     tags: [],
   });
 
