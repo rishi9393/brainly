@@ -1,27 +1,19 @@
-import { Button } from "./components/ui/Button";
-import { PlusIcon } from "./icons/plus";
+import Dashboard from "./pages/Dashboard";
+import { Signin } from "./pages/Sigin";
+import { Signup } from "./pages/Signup";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 
-const App = () => {
+function App() {
   return (
-    <>
-      <div className="flex">
-        <div className="pl-2 pr-2 ">
-          <Button
-            startIcon={<PlusIcon size={"lg"} />}
-            variant="primary"
-            text="Share"
-            size="md"
-          />
-        </div>
-        <div className="pl-2 pr-2 ">
-          <Button variant="secondary" text="Learn More" size="md" />
-        </div>
-        <div className="pl-2 pr-2 ">
-          <Button variant="secondary" text="Learn More" size="lg" />
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
