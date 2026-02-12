@@ -1,11 +1,11 @@
 import Button from "../components/Button";
-import { Input } from "../components/Input";
 import { useRef } from "react";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { Input } from "../components/Input";
 
 
-export function Sigup() {
+export function Signup() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
