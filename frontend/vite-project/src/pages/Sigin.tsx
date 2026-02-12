@@ -3,10 +3,12 @@ import Button from "../components/Button";
 import { Input } from "../components/Input";
 import { BACKEND_URL } from "../config";
 import { useRef } from "react";
+import { useNavigate } from "react-router";
 
 export function Signin() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   async function signin() {
     const username = usernameRef.current?.value;
@@ -20,11 +22,14 @@ export function Signin() {
       console.log("Response:", response.data);
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-        alert("Signin successful!");
+        navigate("/dashboard");
       }
     } catch (error: any) {
       console.error("Error details:", error.response?.data || error.message);
-      alert("Signin failed: " + (error.response?.data?.message || "Please try again."));
+      alert(
+        "Signin failed: " +
+          (error.response?.data?.message || "Please try again."),
+      );
     }
   }
   return (
