@@ -29,7 +29,7 @@ export function Card({ title, link, type }: CardProps) {
           </div>
         </div>
         <div className="pt-4 ">
-          {type === "youtube" && (
+          {type === "youtube" && link && (
             <iframe
               className="w-full"
               src={link.replace("watch?v=", "embed/")}
@@ -41,7 +41,7 @@ export function Card({ title, link, type }: CardProps) {
             ></iframe>
           )}
 
-          {type === "twitter" && (
+          {type === "twitter" && link && (
             <blockquote className="twitter-tweet">
               <a href={link.replace("x.com", "twitter.com")}></a>
             </blockquote>

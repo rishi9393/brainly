@@ -5,7 +5,7 @@ import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middlewares.js";
 import ts from "typescript";
 import { random } from "./utils.js";
-import cors from "cors";  
+import cors from "cors";
 
 const app = express();
 

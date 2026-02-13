@@ -5,9 +5,12 @@ import { ShareIcon } from "../icons/ShareIcon";
 import { CreateContentModel } from "../components/CreateContentModel";
 import { useState } from "react";
 import { Sidebar } from "../components/Sidebar";
+import { useCotent } from "../hooks/useContent";
 
 function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
+  const contents = useCotent();
+
   return (
     <div className="border-gray-200">
       <div className="">
@@ -39,16 +42,10 @@ function Dashboard() {
         </div>
 
         <div className="flex gap-4 mt-4">
-          <Card
-            title="Sample YouTube Video"
-            link="https://www.youtube.com/watch?v=JUeIGphgmcU"
-            type="youtube"
-          />
-          <Card
-            title="twitter"
-            link="https://twitter.com/eddiejaoude/status/2019970352412307854"
-            type="twitter"
-          />
+          {JSON.stringify(contents)}
+          {contents.map(({ link, title, type }) => {
+              return <Card type={type} title={title} link={link} />;
+          })}
         </div>
       </div>
     </div>
