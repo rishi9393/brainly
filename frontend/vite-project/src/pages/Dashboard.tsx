@@ -6,14 +6,16 @@ import { CreateContentModel } from "../components/CreateContentModel";
 import { use, useEffect, useState } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { useCotent } from "../hooks/useContent";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
-  const {contents, refresh} = useCotent();
+  const { contents, refresh } = useCotent();
 
   useEffect(() => {
     refresh();
-  }, [modelOpen])
+  }, [modelOpen]);
 
   return (
     <div className="border-gray-200">
@@ -38,6 +40,20 @@ function Dashboard() {
           />
           <div className="mr-2 ">
             <Button
+              onClick={async () => {
+                const response = await axios.post(
+                  `${BACKEND_URL}/api/v1/brain/share`,
+                  {
+                    share: true,
+                  },{
+                    headers: {
+                      Authorization: localStorage.getItem("token")
+                    }
+                  }
+                );
+                const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+                alert("Share URL: " + shareUrl);
+              }}
               variant="secondary"
               text="Share"
               startIcon={<ShareIcon />}
@@ -46,8 +62,8 @@ function Dashboard() {
         </div>
 
         <div className="flex gap-4 mt-4 flex-wrap">
-            {contents.map(({ link, title, type }) => {
-              return <Card type={type} title={title} link={link} />;
+          {contents.map(({ link, title, type }) => {
+            return <Card type={type} title={title} link={link} />;
           })}
         </div>
       </div>
