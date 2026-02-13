@@ -28,6 +28,8 @@ export function CreateContentModel({ open, onClose }) {
         Authorization: localStorage.getItem("token")
       }
     })
+
+    onClose();
   }
   return (
     <div>

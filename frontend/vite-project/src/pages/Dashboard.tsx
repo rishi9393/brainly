@@ -3,13 +3,17 @@ import { Card } from "../components/Card";
 import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { CreateContentModel } from "../components/CreateContentModel";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { useCotent } from "../hooks/useContent";
 
 function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
-  const contents = useCotent();
+  const {contents, refresh} = useCotent();
+
+  useEffect(() => {
+    refresh();
+  }, [modelOpen])
 
   return (
     <div className="border-gray-200">
@@ -41,9 +45,8 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-4">
-          {JSON.stringify(contents)}
-          {contents.map(({ link, title, type }) => {
+        <div className="flex gap-4 mt-4 flex-wrap">
+            {contents.map(({ link, title, type }) => {
               return <Card type={type} title={title} link={link} />;
           })}
         </div>

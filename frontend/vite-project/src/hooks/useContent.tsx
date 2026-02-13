@@ -5,7 +5,7 @@ import axios from "axios";
 export function useCotent() {
   const [contents, setContents] = useState([]);
 
-  useEffect(() => {
+  function refresh() {
     const response = axios
       .get(`${BACKEND_URL}/api/v1/content`, {
         headers: {
@@ -15,7 +15,19 @@ export function useCotent() {
       .then((response) => {
         setContents(response.data.content);
       });
+  }
+
+  useEffect(() => {
+    refresh();
+    let interval = setInterval(() => {
+      refresh();
+    }, 10 * 100);
+
+    return () => {
+      clearInterval(interval);
+    }
+
   }, []);
 
-  return contents;
+  return {contents,refresh};
 }
