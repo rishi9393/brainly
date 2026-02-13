@@ -3,11 +3,20 @@ import { Card } from "../components/Card";
 import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { CreateContentModel } from "../components/CreateContentModel";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Sidebar } from "../components/Sidebar";
+import { useCotent } from "../hooks/useContent";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
+  const { contents, refresh } = useCotent();
+
+  useEffect(() => {
+    refresh();
+  }, [modelOpen]);
+
   return (
     <div className="border-gray-200">
       <div className="">
@@ -31,6 +40,20 @@ function Dashboard() {
           />
           <div className="mr-2 ">
             <Button
+              onClick={async () => {
+                const response = await axios.post(
+                  `${BACKEND_URL}/api/v1/brain/share`,
+                  {
+                    share: true,
+                  },{
+                    headers: {
+                      Authorization: localStorage.getItem("token")
+                    }
+                  }
+                );
+                const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+                alert("Share URL: " + shareUrl);
+              }}
               variant="secondary"
               text="Share"
               startIcon={<ShareIcon />}
@@ -38,17 +61,10 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-4">
-          <Card
-            title="Sample YouTube Video"
-            link="https://www.youtube.com/watch?v=JUeIGphgmcU"
-            type="youtube"
-          />
-          <Card
-            title="twitter"
-            link="https://twitter.com/eddiejaoude/status/2019970352412307854"
-            type="twitter"
-          />
+        <div className="flex gap-4 mt-4 flex-wrap">
+          {contents.map(({ link, title, type }) => {
+            return <Card type={type} title={title} link={link} />;
+          })}
         </div>
       </div>
     </div>
