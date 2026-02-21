@@ -45,11 +45,12 @@ function Dashboard() {
                   `${BACKEND_URL}/api/v1/brain/share`,
                   {
                     share: true,
-                  },{
+                  },
+                  {
                     headers: {
-                      Authorization: localStorage.getItem("token")
-                    }
-                  }
+                      Authorization: localStorage.getItem("token"),
+                    },
+                  },
                 );
                 const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
                 alert("Share URL: " + shareUrl);
