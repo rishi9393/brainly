@@ -19,81 +19,81 @@ export function CreateContentModel({ open, onClose }) {
     const title = titleRef.current?.value;
     const link = linkRef.current?.value;
 
-    await axios.post(`${BACKEND_URL}/api/v1/content`, {
-      link,
-      type,
-      title,
-    },{
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    })
+    await axios.post(
+      `${BACKEND_URL}/api/v1/content`,
+      {
+        link,
+        type,
+        title,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      },
+    );
 
     onClose();
   }
   return (
     <div>
-      <div>
-        {open && (
-          <div>
-            {" "}
-            (
-            <div className="h-screen w-screen fixed top-0 left-0 bg-black/50 flex justify-center items-center ">
-              <div className="flex flex-col justify center">
-                <span className="bg-white opacity   -100 p-f4 rounded-lg ">
-                  <div className="flex justify-end mb-2">
-                    <div onClick={onClose} className="cursor-pointer">
-                      <CrossIcon />
-                    </div>
-                  </div>
-                  {/* how to solve the ref red line problem ?? */}
-                  <div className="flex flex-col ">
-                    <Input
-                      ref={titleRef}
-                      placeholder={"title"}
-                    />
-                    <Input
-                      ref={linkRef}
-                      placeholder={"link"}
-                    />
-                  </div>
-                  <div>
-                    <h1>Type</h1>
-                    <div className="flex gap-2 p-4">
-                      <Button
-                        text="Youtube"
-                        variant={
-                          type === ContentType.Youtube ? "primary" : "secondary"
-                        }
-                        onClick={() => {
-                          setType(ContentType.Youtube);
-                        }}
-                      ></Button>
-                      <Button
-                        text="Twitter"
-                        variant={
-                          type === ContentType.Twitter ? "primary" : "secondary"
-                        }
-                        onClick={() => {
-                          setType(ContentType.Twitter);
-                        }}
-                      ></Button>
-                    </div>
-                  </div>
-                  <div className="flex justify-center mt-2">
-                    <Button
-                      onClick={addContent}
-                      variant="primary"
-                      text="submit"
-                    />
-                  </div>
-                </span>
+      {open && (
+        <div className="h-screen w-screen fixed top-0 left-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="w-full max-w-lg bg-[#12151c] border border-white/10 rounded-2xl p-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-lg font-semibold text-white">
+                  New capture
+                </div>
+                <div className="text-xs text-white/50">
+                  Save a link into your brain
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="text-white/60 hover:text-white"
+              >
+                <CrossIcon />
+              </button>
+            </div>
+
+            <div className="mt-5 space-y-3">
+              <Input ref={titleRef} placeholder="Title" />
+              <Input ref={linkRef} placeholder="Paste link" />
+            </div>
+
+            <div className="mt-6">
+              <div className="text-xs uppercase tracking-[0.2em] text-white/40">
+                Type
+              </div>
+              <div className="flex gap-3 pt-3">
+                <Button
+                  text="YouTube"
+                  variant={
+                    type === ContentType.Youtube ? "primary" : "secondary"
+                  }
+                  onClick={() => {
+                    setType(ContentType.Youtube);
+                  }}
+                />
+                <Button
+                  text="Twitter"
+                  variant={
+                    type === ContentType.Twitter ? "primary" : "secondary"
+                  }
+                  onClick={() => {
+                    setType(ContentType.Twitter);
+                  }}
+                />
               </div>
             </div>
-            )
+
+            <div className="mt-6 flex justify-end">
+              <Button onClick={addContent} variant="primary" text="Save" />
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

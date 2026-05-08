@@ -10,12 +10,13 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  primary: "bg-purple-600 text-white",
-  secondary: "bg-purple-200 text-purple-600",
+  primary:
+    "bg-gradient-to-r from-[#6d5cff] via-[#7c4dff] to-[#8b5bff] text-white shadow-[0_12px_30px_rgba(124,77,255,0.4)]",
+  secondary: "bg-[#1b1f27] text-white/80 border border-white/10",
 };
 
 const defaultStyles =
-  "px-4 py-2 rounded-md font-light flex justify-center items-center gap-2 cursor-pointer";
+  "px-4 py-2 rounded-xl text-sm font-semibold flex justify-center items-center gap-2 cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(124,77,255,0.25)] disabled:opacity-60 disabled:cursor-not-allowed";
 
 const Button = ({
   variant,
