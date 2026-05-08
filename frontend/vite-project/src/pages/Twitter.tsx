@@ -48,15 +48,12 @@ export function Twitter() {
 
   const removeContent = async (contentId: string) => {
     try {
-      await axios.post(
-        `${BACKEND_URL}/api/v1/content/delete`,
-        { contentId },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+      await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+        data: { contentId },
+        headers: {
+          Authorization: localStorage.getItem("token"),
         },
-      );
+      });
       refresh();
     } catch (error) {
       console.error("Remove content failed", error);
