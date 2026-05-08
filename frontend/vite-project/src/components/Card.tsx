@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ShareIcon } from "../icons/ShareIcon";
 
 interface CardProps {
@@ -7,6 +8,25 @@ interface CardProps {
 }
 
 export function Card({ title, link, type }: CardProps) {
+  useEffect(() => {
+    if (type !== "twitter") return;
+
+    const existingScript = document.getElementById("twitter-wjs");
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = "twitter-wjs";
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      document.body.appendChild(script);
+      return;
+    }
+
+    const twitterWidgets = (window as any).twttr?.widgets;
+    if (twitterWidgets?.load) {
+      twitterWidgets.load();
+    }
+  }, [link, type]);
+
   const getYouTubeId = (url: string) => {
     const match = url.match(
       /(?:youtu.be\/|v=|\/embed\/|\/v\/|\/shorts\/)([A-Za-z0-9_-]{11})/,
@@ -57,9 +77,10 @@ export function Card({ title, link, type }: CardProps) {
         </div>
 
         {type === "twitter" && (
-          <div className="text-sm text-white/70 leading-relaxed">
-            This capture is ready for annotation. Open the original thread to
-            explore context and add your insights.
+          <div className="text-sm text-white/70 leading-relaxed overflow-hidden">
+            <blockquote className="twitter-tweet" data-theme="dark">
+              <a href={link.replace("x.com", "twitter.com")}></a>
+            </blockquote>
           </div>
         )}
 
