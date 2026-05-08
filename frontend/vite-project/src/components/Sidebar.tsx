@@ -23,17 +23,6 @@ export function Sidebar() {
         <SidebarItem text="Links" to="/links" />
         <SidebarItem text="Shared" to="/share/demo" />
       </div>
-
-      <div className="absolute bottom-6 left-6 right-6 space-y-3 text-xs text-white/50">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-violet-400" />
-          <span>Settings</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-white/40" />
-          <span>Help</span>
-        </div>
-      </div>
     </aside>
   );
 }

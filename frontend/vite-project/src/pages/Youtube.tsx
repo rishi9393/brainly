@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Button from "../components/Button";
 import { Sidebar } from "../components/Sidebar";
 import { useCotent } from "../hooks/useContent";
+import { BACKEND_URL } from "../config";
 
 export function Youtube() {
-  const { contents } = useCotent();
+  const { contents, refresh } = useCotent();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
@@ -53,6 +55,24 @@ export function Youtube() {
     return id
       ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
       : "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80";
+  };
+
+  const removeContent = async (contentId: string) => {
+    try {
+      await axios.post(
+        `${BACKEND_URL}/api/v1/content/delete`,
+        { contentId },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        },
+      );
+      refresh();
+    } catch (error) {
+      console.error("Remove content failed", error);
+      alert("Remove failed. Please try again.");
+    }
   };
 
   return (
@@ -135,7 +155,7 @@ export function Youtube() {
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {filteredContents.map((video) => (
             <div
-              key={video.link}
+              key={video._id ?? video.link}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-[#12151c]"
             >
               <div className="relative">
@@ -153,9 +173,19 @@ export function Youtube() {
                 <div className="text-sm font-semibold text-white">
                   {video.title}
                 </div>
-                <div className="mt-3 flex items-center gap-2 text-xs text-white/50">
-                  <div className="h-6 w-6 rounded-full bg-white/10" />
-                  <span>{video.link}</span>
+                <div className="mt-3 flex items-center justify-between text-xs text-white/50">
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-full bg-white/10" />
+                    <span className="truncate max-w-[160px]">{video.link}</span>
+                  </div>
+                  {video._id && (
+                    <button
+                      onClick={() => removeContent(String(video._id))}
+                      className="text-xs text-white/60 hover:text-white"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
