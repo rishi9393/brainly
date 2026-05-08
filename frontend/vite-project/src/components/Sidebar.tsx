@@ -5,14 +5,24 @@ import { SidebarItem } from "./SidebarItem";
 
 export function Sidebar() {
   return (
-    <div className="h-screen bg-white border-r border-gray-200 w-72 fixed left-0 top-0 p-6">
-      <div className="flex text-2xl items-center gap-2 font-bold  ">
-        <LogoIcon/>Brianly
+    <aside className="h-screen w-64 fixed left-0 top-0 bg-[#0f1116] border-r border-white/5 p-6">
+      <div className="flex items-center gap-3 text-xl font-semibold text-white">
+        <div className="h-10 w-10 rounded-xl bg-[#1c1f27] flex items-center justify-center text-violet-300">
+          <LogoIcon />
+        </div>
+        <div>
+          <div className="font-display tracking-wide">Brainly</div>
+          <div className="text-xs text-white/50">Second Brain</div>
+        </div>
       </div>
-      <div className="pt-8 animate-fade-in">
-        <SidebarItem text="Twitter" icon={<TwitterIcon />} />
-        <SidebarItem text="Youtube" icon={<YoutubeIcon />} />
+
+      <div className="pt-10 space-y-2">
+        <SidebarItem text="All Notes" to="/dashboard" />
+        <SidebarItem text="YouTube" to="/youtube" icon={<YoutubeIcon />} />
+        <SidebarItem text="Twitter" to="/twitter" icon={<TwitterIcon />} />
+        <SidebarItem text="Links" to="/links" />
+        <SidebarItem text="Shared" to="/share/demo" />
       </div>
-    </div>
+    </aside>
   );
 }

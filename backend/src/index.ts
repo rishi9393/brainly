@@ -70,15 +70,24 @@ app.get("/api/v1/content", userMiddleware, async (req, res) => {
   res.json({ content });
 });
 app.delete("/api/v1/content", userMiddleware, async (req, res) => {
-  const contentId = req.body.contentId;
+  const contentId = req.body.contentId ?? req.query.contentId;
   // @ts-ignore
   const userId = req.userId;
 
-  await ContentModel.deleteMany({
-    contentId,
+  if (!contentId) {
+    res.status(400).json({ message: "contentId is required" });
+    return;
+  }
+
+  const result = await ContentModel.deleteOne({
+    _id: contentId,
     // @ts-ignore
     userId: userId,
   });
+  if (!result.deletedCount) {
+    res.status(404).json({ message: "content not found" });
+    return;
+  }
   res.json({ message: "content deleted" });
 });
 app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
